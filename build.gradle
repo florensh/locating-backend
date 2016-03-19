@@ -8,6 +8,7 @@ buildscript {
 }
 
 apply plugin: 'java'
+apply plugin: 'application'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
@@ -16,6 +17,8 @@ jar {
     baseName = 'locating-backend'
     version = '0.1.0'
 }
+
+mainClassName = "com.fh.locating.Application"
 
 repositories {
     mavenCentral()
@@ -27,7 +30,7 @@ targetCompatibility = 1.7
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-rest")
     compile("org.springframework.boot:spring-boot-starter-data-mongodb")
-    compile group: "de.flapdoodle.embed", name: "de.flapdoodle.embed.mongo", version: "1.50.1"
+    //compile group: "de.flapdoodle.embed", name: "de.flapdoodle.embed.mongo", version: "1.50.1"
     compile 'org.springframework.data:spring-data-rest-hal-browser'
 }
 
