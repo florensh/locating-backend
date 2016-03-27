@@ -13,6 +13,7 @@ public interface SignalRepository extends MongoRepository<Signal, String> {
 
 	List<Signal> findByTimestampBetweenAndMacIn(
 			@DateTimeFormat(iso = ISO.DATE) @Param("start") Date start,
-			@Param("end") Date end, @Param("macs") Collection<String> macs);
+			@DateTimeFormat(iso = ISO.DATE) @Param("end") Date end,
+			@Param("macs") Collection<String> macs);
 
 }
