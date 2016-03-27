@@ -16,4 +16,6 @@ public interface SignalRepository extends MongoRepository<Signal, String> {
 			@DateTimeFormat(iso = ISO.DATE) @Param("end") Date end,
 			@Param("macs") Collection<String> macs);
 
+	List<Signal> findByMacIn(@Param("macs") Collection<String> macs);
+
 }
