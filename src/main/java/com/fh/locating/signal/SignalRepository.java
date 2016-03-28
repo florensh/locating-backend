@@ -11,8 +11,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 public interface SignalRepository extends MongoRepository<Signal, String> {
 
 	List<Signal> findByTimestampBetweenAndMacIn(
-			@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'") @Param("start") Date start,
-			@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'") @Param("end") Date end,
+			@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") @Param("start") Date start,
+			@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") @Param("end") Date end,
 			@Param("macs") Collection<String> macs);
 
 	List<Signal> findByMacIn(@Param("macs") Collection<String> macs);
