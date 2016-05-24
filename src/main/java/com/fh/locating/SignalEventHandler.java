@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.rest.core.annotation.HandleAfterSave;
+import org.springframework.data.rest.core.annotation.HandleBeforeSave;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -40,10 +40,8 @@ public class SignalEventHandler {
 	@Autowired
 	private PersonRepository personRepository;
 
-	@HandleAfterSave
+	@HandleBeforeSave
 	public void notifyViaPushover(Signal s) {
-
-		this.LOGGER.info("Sending to pushover");
 
 		DateTime ts = s.getTimestamp();
 
@@ -52,6 +50,7 @@ public class SignalEventHandler {
 						Arrays.asList(s.getMac()));
 
 		if (signals == null || signals.isEmpty()) {
+			this.LOGGER.info("Sending to pushover");
 			Person p = this.personRepository.findByDevicesMac(s.getMac());
 			String d = p.getDeviceByMac(s.getMac());
 
