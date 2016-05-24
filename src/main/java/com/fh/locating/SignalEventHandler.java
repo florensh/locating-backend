@@ -45,7 +45,7 @@ public class SignalEventHandler {
 						ts.toDate(), Arrays.asList(s.getMac()));
 
 		if (signals == null || signals.isEmpty()) {
-			Person p = this.personRepository.findByDeviceMac(s.getMac());
+			Person p = this.personRepository.findByDevicesMac(s.getMac());
 			String d = p.getDeviceByMac(s.getMac());
 
 			send(p.getName(), d);
