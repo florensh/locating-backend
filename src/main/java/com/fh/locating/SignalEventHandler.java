@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.core.annotation.HandleAfterSave;
@@ -19,6 +21,9 @@ import com.fh.locating.signal.SignalRepository;
 @RepositoryEventHandler
 @Component
 public class SignalEventHandler {
+
+	private final Logger LOGGER = LoggerFactory
+			.getLogger(SignalEventHandler.class);
 
 	@Value("${pushover.token}")
 	private String token;
@@ -37,6 +42,8 @@ public class SignalEventHandler {
 
 	@HandleAfterSave
 	public void notifyViaPushover(Signal s) {
+
+		this.LOGGER.info("Sending to pushover");
 
 		DateTime ts = s.getTimestamp();
 
