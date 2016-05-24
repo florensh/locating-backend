@@ -13,6 +13,8 @@ import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fh.locating.people.Person;
 import com.fh.locating.people.PersonRepository;
 import com.fh.locating.signal.Signal;
@@ -69,7 +71,14 @@ public class SignalEventHandler {
 				title, message);
 
 		RestTemplate template = new RestTemplate();
-
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			this.LOGGER.info(String.format("Sending to pushover: %s",
+					mapper.writeValueAsString(pMessage)));
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		template.postForObject(url, pMessage, String.class);
 
 	}
