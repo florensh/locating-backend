@@ -37,6 +37,20 @@ public class Person {
 		this.devices = devices;
 	}
 
+	public String getDeviceByMac(String mac) {
+		if (mac == null) {
+			throw new IllegalArgumentException("Device name must not be null");
+		}
+
+		for (Device d : this.devices) {
+			if (d.getMac().equals(mac)) {
+				return d.getName();
+			}
+		}
+
+		return null;
+	}
+
 }
 
 class Device {
