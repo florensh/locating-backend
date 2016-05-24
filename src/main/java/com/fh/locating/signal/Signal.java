@@ -1,7 +1,6 @@
 package com.fh.locating.signal;
 
-import java.util.Date;
-
+import org.joda.time.DateTime;
 import org.springframework.data.annotation.Id;
 
 public class Signal {
@@ -11,7 +10,7 @@ public class Signal {
 
 	private String mac;
 
-	private Date timestamp;
+	private DateTime timestamp;
 
 	private Integer rssi;
 
@@ -39,11 +38,11 @@ public class Signal {
 		this.mac = mac;
 	}
 
-	public Date getTimestamp() {
+	public DateTime getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(Date timestamp) {
+	public void setTimestamp(DateTime timestamp) {
 		this.timestamp = timestamp;
 	}
 

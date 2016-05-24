@@ -38,11 +38,11 @@ public class SignalEventHandler {
 	@HandleAfterSave
 	public void notifyViaPushover(Signal s) {
 
-		DateTime ts = new DateTime(s.getTimestamp());
+		DateTime ts = s.getTimestamp();
 
 		List<Signal> signals = this.signalRepository
-				.findByTimestampBetweenAndMacIn(ts.minusHours(2).toDate(),
-						ts.toDate(), Arrays.asList(s.getMac()));
+				.findByTimestampBetweenAndMacIn(ts.minusHours(2), ts,
+						Arrays.asList(s.getMac()));
 
 		if (signals == null || signals.isEmpty()) {
 			Person p = this.personRepository.findByDevicesMac(s.getMac());
