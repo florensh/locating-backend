@@ -1,5 +1,7 @@
 package com.fh.locating;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,11 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
+import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fh.locating.people.Person;
 import com.fh.locating.people.PersonRepository;
 import com.fh.locating.signal.Signal;
@@ -70,16 +73,26 @@ public class SignalEventHandler {
 		PushoverMessage pMessage = new PushoverMessage(this.token, this.user,
 				title, message);
 
-		RestTemplate template = new RestTemplate();
-		ObjectMapper mapper = new ObjectMapper();
+		URI uri;
 		try {
-			this.LOGGER.info(String.format("Sending to pushover: %s",
-					mapper.writeValueAsString(pMessage)));
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			uri = new URI(this.url);
+		} catch (URISyntaxException e) {
+			throw new IllegalArgumentException(e);
 		}
-		template.postForObject(url, pMessage, String.class);
+
+		// register form message converter
+		final RestTemplate restTemplate = new RestTemplate();
+		restTemplate.getMessageConverters().add(new FormHttpMessageConverter());
+
+		// create form parameters as a MultiValueMap
+		final MultiValueMap<String, String> formVars = new LinkedMultiValueMap<String, String>();
+		formVars.add("token", pMessage.getToken());
+		formVars.add("user", pMessage.getUser());
+		formVars.add("title", pMessage.getTitle());
+		formVars.add("message", pMessage.getMessage());
+
+		final String result = restTemplate.postForObject(uri.toString(),
+				formVars, String.class);
 
 	}
 
