@@ -90,6 +90,7 @@ public class SignalEventHandler {
 		formVars.add("user", pMessage.getUser());
 		formVars.add("title", pMessage.getTitle());
 		formVars.add("message", pMessage.getMessage());
+		formVars.add("html", "1");
 
 		final String result = restTemplate.postForObject(uri.toString(),
 				formVars, String.class);
