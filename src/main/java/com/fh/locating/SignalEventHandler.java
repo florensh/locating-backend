@@ -55,11 +55,14 @@ public class SignalEventHandler {
 						Arrays.asList(s.getMac()));
 
 		if (signals == null || signals.isEmpty()) {
-			this.LOGGER.info("Sending to pushover");
 			Person p = this.personRepository.findByDevicesMac(s.getMac());
-			String d = p.getDeviceByMac(s.getMac());
+			if (p != null) {
+				this.LOGGER.info("Sending to pushover");
+				String d = p.getDeviceByMac(s.getMac());
 
-			send(p.getName(), d);
+				send(p.getName(), d);
+
+			}
 		}
 
 	}
