@@ -14,6 +14,16 @@ public class Signal {
 
 	private Integer rssi;
 
+	private String vendor;
+
+	public String getVendor() {
+		return vendor;
+	}
+
+	public void setVendor(String vendor) {
+		this.vendor = vendor;
+	}
+
 	public Integer getRssi() {
 		return rssi;
 	}

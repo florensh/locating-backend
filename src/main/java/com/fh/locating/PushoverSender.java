@@ -25,10 +25,10 @@ import com.fh.locating.signal.SignalRepository;
 
 @RepositoryEventHandler
 @Component
-public class SignalEventHandler {
+public class PushoverSender {
 
 	private final Logger LOGGER = LoggerFactory
-			.getLogger(SignalEventHandler.class);
+			.getLogger(PushoverSender.class);
 
 	@Value("${pushover.token}")
 	private String token;
