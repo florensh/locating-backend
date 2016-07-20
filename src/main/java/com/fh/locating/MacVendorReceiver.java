@@ -34,6 +34,7 @@ public class MacVendorReceiver {
 				0, 8));
 		if (v == null) {
 			v = fromPublicAPI(s.getMac());
+			this.vendorRepository.save(v);
 		}
 		s.setVendor(v.getName());
 
