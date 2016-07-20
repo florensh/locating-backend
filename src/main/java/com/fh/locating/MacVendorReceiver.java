@@ -3,6 +3,8 @@ package com.fh.locating;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
@@ -27,6 +29,9 @@ public class MacVendorReceiver {
 	@Value("${macvendorlookup.url}")
 	private String url;
 
+	private final Logger LOGGER = LoggerFactory
+			.getLogger(MacVendorReceiver.class);
+
 	@HandleBeforeCreate
 	public void doBeforeCreate(Signal s) {
 
@@ -41,7 +46,8 @@ public class MacVendorReceiver {
 	}
 
 	private Vendor fromPublicAPI(String mac) {
-		// register form message converter
+
+		this.LOGGER.info("Requesting vendor of " + mac);
 		final RestTemplate restTemplate = new RestTemplate();
 		restTemplate.getMessageConverters().add(new FormHttpMessageConverter());
 
@@ -58,6 +64,8 @@ public class MacVendorReceiver {
 
 		final String result = restTemplate.postForObject(uri.toString(),
 				formVars, String.class);
+
+		this.LOGGER.info("Got " + result);
 
 		Vendor v = new Vendor();
 		v.setMacPrefix(mac.substring(0, 8));
