@@ -15,7 +15,6 @@ import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.fh.locating.people.Person;
@@ -27,8 +26,7 @@ import com.fh.locating.signal.SignalRepository;
 @Component
 public class PushoverSender {
 
-	private final Logger LOGGER = LoggerFactory
-			.getLogger(PushoverSender.class);
+	private final Logger LOGGER = LoggerFactory.getLogger(PushoverSender.class);
 
 	@Value("${pushover.token}")
 	private String token;
@@ -38,6 +36,15 @@ public class PushoverSender {
 
 	@Value("${pushover.url}")
 	private String url;
+
+	@Value("${pushover.title}")
+	private String titleTemplate;
+
+	@Value("${pushover.message}")
+	private String messageTemplate;
+
+	@Value("${pushover.awayTime}")
+	private Integer awayTime;
 
 	@Autowired
 	private SignalRepository signalRepository;
@@ -51,11 +58,13 @@ public class PushoverSender {
 		DateTime ts = s.getTimestamp();
 
 		List<Signal> signals = this.signalRepository
-				.findByTimestampBetweenAndMacIn(ts.minusHours(2), ts,
+				.findByTimestampBetweenAndMacIn(ts.minusHours(awayTime), ts,
 						Arrays.asList(s.getMac()));
 
 		if (signals == null || signals.isEmpty()) {
-			Person p = this.personRepository.findByDevicesMac(s.getMac());
+			Person p = this.personRepository.findByDevicesMacAndDevicesEnabled(
+					s.getMac(), true);
+
 			if (p != null) {
 				this.LOGGER.info("Sending to pushover");
 				String d = p.getDeviceByMac(s.getMac());
@@ -69,9 +78,8 @@ public class PushoverSender {
 
 	private void send(String name, String device) {
 
-		String title = String.format("Person detected", name);
-		String message = String.format(
-				"<b>%s</b> is at home with device <u>%s</u>", name, device);
+		String title = String.format(this.titleTemplate, name);
+		String message = String.format(this.messageTemplate, name, device);
 
 		PushoverMessage pMessage = new PushoverMessage(this.token, this.user,
 				title, message);
@@ -83,72 +91,42 @@ public class PushoverSender {
 			throw new IllegalArgumentException(e);
 		}
 
-		// register form message converter
 		final RestTemplate restTemplate = new RestTemplate();
 		restTemplate.getMessageConverters().add(new FormHttpMessageConverter());
 
-		// create form parameters as a MultiValueMap
-		final MultiValueMap<String, String> formVars = new LinkedMultiValueMap<String, String>();
-		formVars.add("token", pMessage.getToken());
-		formVars.add("user", pMessage.getUser());
-		formVars.add("title", pMessage.getTitle());
-		formVars.add("message", pMessage.getMessage());
-		formVars.add("html", "1");
-
-		final String result = restTemplate.postForObject(uri.toString(),
-				formVars, String.class);
+		restTemplate.postForObject(uri.toString(), pMessage, String.class);
 
 	}
 
-	class PushoverMessage {
+	class PushoverMessage extends LinkedMultiValueMap<String, String> {
 
-		private String token;
-
-		private String user;
-
-		private String title;
-
-		private String message;
+		private static final long serialVersionUID = 3623949040406242112L;
 
 		public PushoverMessage(String token, String user, String title,
 				String message) {
 
-			this.token = token;
-			this.user = user;
-			this.title = title;
-			this.message = message;
+			add("token", token);
+			add("user", user);
+			add("title", title);
+			add("message", message);
+			add("html", "1");
+
 		}
 
 		public String getToken() {
-			return token;
-		}
-
-		public void setToken(String token) {
-			this.token = token;
+			return super.getFirst("token");
 		}
 
 		public String getUser() {
-			return user;
-		}
-
-		public void setUser(String user) {
-			this.user = user;
+			return super.getFirst("user");
 		}
 
 		public String getTitle() {
-			return title;
-		}
-
-		public void setTitle(String title) {
-			this.title = title;
+			return super.getFirst("title");
 		}
 
 		public String getMessage() {
-			return message;
-		}
-
-		public void setMessage(String message) {
-			this.message = message;
+			return super.getFirst("message");
 		}
 
 	}
