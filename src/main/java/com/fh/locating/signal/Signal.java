@@ -2,6 +2,7 @@ package com.fh.locating.signal;
 
 import org.joda.time.DateTime;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 public class Signal {
 
@@ -10,11 +11,22 @@ public class Signal {
 
 	private String mac;
 
+	@Indexed(name = "timeIndex")
 	private DateTime timestamp;
 
 	private Integer rssi;
 
 	private String vendor;
+
+	private String ssid;
+
+	public String getSsid() {
+		return ssid;
+	}
+
+	public void setSsid(String ssid) {
+		this.ssid = ssid;
+	}
 
 	public String getVendor() {
 		return vendor;
