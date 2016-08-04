@@ -11,6 +11,8 @@ public class Signal {
 
 	private String mac;
 
+	private String receiverUuid;
+
 	@Indexed(name = "timeIndex")
 	private DateTime timestamp;
 
@@ -20,52 +22,60 @@ public class Signal {
 
 	private String ssid;
 
-	public String getSsid() {
-		return ssid;
-	}
-
-	public void setSsid(String ssid) {
-		this.ssid = ssid;
-	}
-
-	public String getVendor() {
-		return vendor;
-	}
-
-	public void setVendor(String vendor) {
-		this.vendor = vendor;
-	}
-
-	public Integer getRssi() {
-		return rssi;
-	}
-
-	public void setRssi(Integer rssi) {
-		this.rssi = rssi;
-	}
-
 	public String getId() {
 		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public String getMac() {
 		return mac;
 	}
 
-	public void setMac(String mac) {
-		this.mac = mac;
+	public String getReceiverUuid() {
+		return receiverUuid;
+	}
+
+	public Integer getRssi() {
+		return rssi;
+	}
+
+	public String getSsid() {
+		return ssid;
 	}
 
 	public DateTime getTimestamp() {
 		return timestamp;
 	}
 
+	public String getVendor() {
+		return vendor;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void setMac(String mac) {
+		this.mac = mac;
+	}
+
+	public void setReceiverUuid(String receiverUuid) {
+		this.receiverUuid = receiverUuid;
+	}
+
+	public void setRssi(Integer rssi) {
+		this.rssi = rssi;
+	}
+
+	public void setSsid(String ssid) {
+		this.ssid = ssid;
+	}
+
 	public void setTimestamp(DateTime timestamp) {
 		this.timestamp = timestamp;
+	}
+
+	public void setVendor(String vendor) {
+		this.vendor = vendor;
 	}
 
 }
