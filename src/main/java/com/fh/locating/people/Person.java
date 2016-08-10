@@ -37,14 +37,14 @@ public class Person {
 		this.devices = devices;
 	}
 
-	public String getDeviceByMac(String mac) {
+	public Device getDeviceByMac(String mac) {
 		if (mac == null) {
 			throw new IllegalArgumentException("Device name must not be null");
 		}
 
 		for (Device d : this.devices) {
 			if (d.getMac().equals(mac)) {
-				return d.getName();
+				return d;
 			}
 		}
 
@@ -53,33 +53,33 @@ public class Person {
 
 }
 
-class Device {
-	private String name;
-	private String mac;
-	private Boolean enabled = Boolean.FALSE;
-
-	public Boolean getEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getMac() {
-		return mac;
-	}
-
-	public void setMac(String mac) {
-		this.mac = mac;
-	}
-
-}
+// class Device {
+// private String name;
+// private String mac;
+// private Boolean enabled = Boolean.FALSE;
+//
+// public Boolean getEnabled() {
+// return enabled;
+// }
+//
+// public void setEnabled(Boolean enabled) {
+// this.enabled = enabled;
+// }
+//
+// public String getName() {
+// return name;
+// }
+//
+// public void setName(String name) {
+// this.name = name;
+// }
+//
+// public String getMac() {
+// return mac;
+// }
+//
+// public void setMac(String mac) {
+// this.mac = mac;
+// }
+//
+// }

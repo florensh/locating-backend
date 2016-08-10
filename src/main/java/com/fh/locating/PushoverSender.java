@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import com.fh.locating.people.Device;
 import com.fh.locating.people.Person;
 import com.fh.locating.people.PersonRepository;
 import com.fh.locating.signal.Signal;
@@ -56,22 +57,30 @@ public class PushoverSender {
 	public void notifyViaPushover(Signal s) {
 
 		DateTime ts = s.getTimestamp();
+		String mac = s.getMac();
 
 		List<Signal> signals = this.signalRepository
 				.findByTimestampBetweenAndMacIn(ts.minusHours(awayTime), ts,
 						Arrays.asList(s.getMac()));
 
 		if (signals == null || signals.isEmpty()) {
-			Person p = this.personRepository.findByDevicesMacAndDevicesEnabled(
-					s.getMac(), true);
+			Person person = this.personRepository.findByDevicesMac(mac);
 
-			if (p != null) {
-				this.LOGGER.info("Sending to pushover");
-				String d = p.getDeviceByMac(s.getMac());
+			if (person != null) {
+				Device device = person.getDeviceByMac(mac);
 
-				send(p.getName(), d);
+				if (Boolean.TRUE.equals(device.getEnabled())) {
+					this.LOGGER.info("Sending to pushover");
+					String deviceName = device.getName();
+
+					send(person.getName(), deviceName);
+				}
 
 			}
+		} else {
+			this.LOGGER.info(String.format(
+					"Cancel - already sent within last %d hours to pushover!",
+					awayTime));
 		}
 
 	}

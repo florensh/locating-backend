@@ -8,4 +8,6 @@ public interface PersonRepository extends MongoRepository<Person, String> {
 
 	Person findByDevicesMacAndDevicesEnabled(String mac, boolean enabled);
 
+	Person findByDevicesMac(String mac);
+
 }
