@@ -30,12 +30,16 @@ targetCompatibility = 1.8
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-rest")
     compile("org.springframework.boot:spring-boot-starter-data-mongodb")
-    //compile group: "de.flapdoodle.embed", name: "de.flapdoodle.embed.mongo", version: "1.50.1"
     compile 'org.springframework.data:spring-data-rest-hal-browser'
     
     // http://mvnrepository.com/artifact/joda-time/joda-time
 	compile group: 'joda-time', name: 'joda-time', version: '2.9.3'
 	compile("com.fasterxml.jackson.datatype:jackson-datatype-joda:2.4.2");
+	
+	compile("org.springframework.boot:spring-boot-starter-test")
+	testCompile 'org.springframework.restdocs:spring-restdocs-mockmvc:1.0.1.RELEASE'
+	testCompile("junit:junit")
+    testCompile group: "de.flapdoodle.embed", name: "de.flapdoodle.embed.mongo", version: "1.50.1"
     
 }
 
