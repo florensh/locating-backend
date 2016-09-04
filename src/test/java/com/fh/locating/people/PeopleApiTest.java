@@ -44,7 +44,6 @@ public class PeopleApiTest {
 	@Before
 	public void setUp() {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
-				// .apply(springSecurity())
 				.apply(documentationConfiguration(this.restDocumentation))
 				.build();
 	}
