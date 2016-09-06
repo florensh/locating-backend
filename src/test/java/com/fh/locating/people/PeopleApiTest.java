@@ -36,7 +36,7 @@ public class PeopleApiTest {
 
 	@Rule
 	public RestDocumentation restDocumentation = new RestDocumentation(
-			"src/docs/generated-snippets");
+			"build/docs/input/generated-snippets");
 
 	@Autowired
 	private WebApplicationContext context;
