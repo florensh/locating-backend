@@ -6,9 +6,6 @@ bin/
 .mtj.tmp/
 *.prefs
 
-src/docs
-src/main/resources/public/docs
-
 # Package Files #
 *.war
 *.ear

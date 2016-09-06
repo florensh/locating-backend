@@ -1,0 +1,15 @@
+= Locating API Documentation
+florensh <florensh@gmx.de>
+v1.0, 2016-09-01
+:toc: left
+
+== Person
+=== POST a new person
+==== CURL Example
+include::generated-snippets/post-person/curl-request.adoc[]
+
+==== HTTP Request
+include::generated-snippets/post-person/http-request.adoc[]
+
+==== HTTP Response
+include::generated-snippets/post-person/http-response.adoc[]
