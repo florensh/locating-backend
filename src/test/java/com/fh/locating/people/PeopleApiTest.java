@@ -5,6 +5,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.restdocs.RestDocumentation;
 import org.springframework.test.context.ActiveProfiles;
@@ -20,6 +21,7 @@ import com.fh.locating.Application;
 @SpringApplicationConfiguration(classes = { Application.class })
 @WebAppConfiguration
 @ActiveProfiles("test")
+@IntegrationTest
 public class PeopleApiTest {
 
 	@Autowired

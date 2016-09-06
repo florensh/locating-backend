@@ -1,7 +1,3 @@
-import org.gradle.logging.ShowStacktrace
-gradle.startParameter.showStacktrace = org.gradle.api.logging.configuration.ShowStacktrace.ALWAYS
-throw new RuntimeException('lol')
-
 buildscript {
     repositories {
         mavenLocal()
