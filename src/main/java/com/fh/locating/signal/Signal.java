@@ -1,8 +1,14 @@
 package com.fh.locating.signal;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.joda.time.DateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+
+import com.fh.locating.image.Image;
 
 public class Signal {
 
@@ -16,6 +22,9 @@ public class Signal {
 	@Indexed(name = "timeIndex")
 	private DateTime timestamp;
 
+	@DBRef
+	private Set<Image> images = new HashSet<Image>();
+
 	private Integer rssi;
 
 	private String vendor;
@@ -24,6 +33,18 @@ public class Signal {
 
 	public String getId() {
 		return id;
+	}
+
+	public void addImage(Image image) {
+		this.images.add(image);
+	}
+
+	public void removeImage(Image image) {
+		this.images.remove(image);
+	}
+
+	public Set<Image> getImages() {
+		return images;
 	}
 
 	public String getMac() {
@@ -52,6 +73,10 @@ public class Signal {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public void setImages(Set<Image> images) {
+		this.images = images;
 	}
 
 	public void setMac(String mac) {
