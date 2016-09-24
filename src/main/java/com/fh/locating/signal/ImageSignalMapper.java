@@ -3,6 +3,8 @@ package com.fh.locating.signal;
 import java.util.List;
 
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -12,6 +14,7 @@ import com.fh.locating.image.ImageRepository;
 
 @Component
 public class ImageSignalMapper {
+	private Logger LOGGER = LoggerFactory.getLogger(ImageSignalMapper.class);
 
 	private static final int LOOKUP_TIME_RANGE = 7000 * 60;
 
@@ -25,6 +28,8 @@ public class ImageSignalMapper {
 
 	@Scheduled(fixedDelay = LOOKUP_TIME_RANGE - 60000)
 	public void map() {
+
+		LOGGER.info("Mapping images to signals!");
 
 		DateTime start = DateTime.now().minus(LOOKUP_TIME_RANGE);
 		DateTime end = DateTime.now();

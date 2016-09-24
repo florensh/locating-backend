@@ -47,6 +47,12 @@ dependencies {
 	compile group: 'joda-time', name: 'joda-time', version: '2.9.3'
 	compile("com.fasterxml.jackson.datatype:jackson-datatype-joda:2.4.2");
 	
+	// https://mvnrepository.com/artifact/com.cloudinary/cloudinary-http42
+	compile group: 'com.cloudinary', name: 'cloudinary-http42', version: '1.4.5'
+
+	
+	
+	
 	compile("org.springframework.boot:spring-boot-starter-test")
 	testCompile 'org.springframework.restdocs:spring-restdocs-mockmvc:1.0.1.RELEASE'
 	testCompile("junit:junit")

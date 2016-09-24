@@ -7,8 +7,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableScheduling
 @Configuration
-@Profile("dev")
-public class DevConfig {
+@Profile("test")
+public class TestConfig {
 
 	@Bean
 	public ImageStorageService imageStorageService() {

@@ -10,6 +10,15 @@ public class Person {
 	@Id
 	private String id;
 	private String name;
+	private Boolean imageCapturing = Boolean.FALSE;
+
+	public Boolean getImageCapturing() {
+		return imageCapturing;
+	}
+
+	public void setImageCapturing(Boolean imageCapturing) {
+		this.imageCapturing = imageCapturing;
+	}
 
 	public String getName() {
 		return name;

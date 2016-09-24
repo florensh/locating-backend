@@ -7,12 +7,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableScheduling
 @Configuration
-@Profile("dev")
-public class DevConfig {
+@Profile("prod")
+public class ProdConfig {
 
 	@Bean
 	public ImageStorageService imageStorageService() {
-		return new DummyImageStorageService();
+		return new CloudinaryUploader();
 	}
 
 }
