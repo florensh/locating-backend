@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 import org.springframework.http.converter.FormHttpMessageConverter;
@@ -26,7 +26,7 @@ import com.fh.locating.signal.SignalRepository;
 
 @RepositoryEventHandler
 @Component
-@Profile("prod")
+@ConditionalOnProperty(name = "pushover.url")
 public class PushoverSender {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(PushoverSender.class);
