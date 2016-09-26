@@ -8,7 +8,7 @@ public class Image {
 	@Id
 	private String id;
 
-	private String url;
+	private String imageUrl;
 
 	private DateTime timestamp;
 
@@ -22,12 +22,12 @@ public class Image {
 		this.id = id;
 	}
 
-	public String getUrl() {
-		return url;
+	public String getImageUrl() {
+		return imageUrl;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setImageUrl(String url) {
+		this.imageUrl = url;
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class Image {
 						.hashCode());
 		result = prime * result
 				+ ((timestamp == null) ? 0 : timestamp.hashCode());
-		result = prime * result + ((url == null) ? 0 : url.hashCode());
+		result = prime * result + ((imageUrl == null) ? 0 : imageUrl.hashCode());
 		return result;
 	}
 
@@ -63,10 +63,10 @@ public class Image {
 				return false;
 		} else if (!timestamp.equals(other.timestamp))
 			return false;
-		if (url == null) {
-			if (other.url != null)
+		if (imageUrl == null) {
+			if (other.imageUrl != null)
 				return false;
-		} else if (!url.equals(other.url))
+		} else if (!imageUrl.equals(other.imageUrl))
 			return false;
 		return true;
 	}

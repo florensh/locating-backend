@@ -73,7 +73,7 @@ public class TestDataGenerator {
 		this.LOGGER.info("Creating images!");
 		for (int i = 0; i < imgs.length; i++) {
 			Image img = new Image();
-			img.setUrl((String) imgs[i][0]);
+			img.setImageUrl((String) imgs[i][0]);
 			img.setCameraIdentification((String) imgs[i][1]);
 			img.setTimestamp(DateTime.now());
 
