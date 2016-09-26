@@ -46,6 +46,12 @@ public class CloudinaryUploader implements ImageStorageService {
 					ObjectUtils.asMap("resource_type", "auto"));
 
 			Image img = new Image();
+
+			String url = (String) uploadResult.get("secure_url");
+			if (url == null || url.isEmpty()) {
+				url = (String) uploadResult.get("url");
+			}
+
 			img.setUrl((String) uploadResult.get(uploadResult.get("secure_url")));
 			img.setTimestamp(timestamp);
 			img.setCameraIdentification(cameraId);
