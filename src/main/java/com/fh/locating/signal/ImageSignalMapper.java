@@ -16,7 +16,7 @@ import com.fh.locating.image.ImageRepository;
 public class ImageSignalMapper {
 	private Logger LOGGER = LoggerFactory.getLogger(ImageSignalMapper.class);
 
-	private static final int LOOKUP_TIME_RANGE = 7000 * 60;
+	private static final int LOOKUP_TIME_RANGE = 3000 * 60;
 
 	private static final int MAP_TIME_RANGE = 40000;
 
