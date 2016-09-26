@@ -49,18 +49,16 @@ public class CloudinaryUploader implements ImageStorageService {
 			uploadResult = c.uploader().upload(image.getBytes(),
 					ObjectUtils.asMap("resource_type", "auto"));
 
-			LOGGER.info(String.format(
-					"Image has been uploaded to cloudinary. url is %s",
-					(String) uploadResult.get("secure_url")));
-
 			Image img = new Image();
 
 			String url = (String) uploadResult.get("secure_url");
 			if (url == null || url.isEmpty()) {
 				url = (String) uploadResult.get("url");
 			}
+			LOGGER.info(String.format(
+					"Image has been uploaded to cloudinary. url is %s", url));
 
-			img.setImageUrl((String) uploadResult.get(uploadResult.get("secure_url")));
+			img.setImageUrl(url);
 			img.setTimestamp(timestamp);
 			img.setCameraIdentification(cameraId);
 
