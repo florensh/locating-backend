@@ -18,7 +18,7 @@ public class ImageSignalMapper {
 
 	private static final int LOOKUP_TIME_RANGE = 7000 * 60;
 
-	private static final int MAP_TIME_RANGE = 10000;
+	private static final int MAP_TIME_RANGE = 20000;
 
 	@Autowired
 	private SignalRepository signals;
