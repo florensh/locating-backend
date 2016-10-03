@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +20,7 @@ import com.fh.locating.image.ImageRepository;
 
 @Component
 @ConditionalOnProperty(name = "cloudinary.api_key")
+@Primary
 public class CloudinaryUploader implements ImageStorageService {
 
 	private Logger LOGGER = LoggerFactory.getLogger(CloudinaryUploader.class);
