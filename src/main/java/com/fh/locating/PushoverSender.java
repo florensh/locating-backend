@@ -3,7 +3,9 @@ package com.fh.locating;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -55,34 +57,44 @@ public class PushoverSender {
 	@Autowired
 	private PersonRepository personRepository;
 
+	private final Map<String, Object> lockCache = new HashMap<String, Object>();
+
 	@HandleBeforeCreate
 	public void notifyViaPushover(Signal s) {
 
 		DateTime ts = s.getTimestamp();
 		String mac = s.getMac();
 
-		List<Signal> signals = this.signalRepository
-				.findByTimestampBetweenAndMacIn(ts.minusHours(awayTime), ts,
-						Arrays.asList(s.getMac()));
+		Object lock = this.lockCache.get(mac);
 
-		if (signals == null || signals.isEmpty()) {
-			Person person = this.personRepository.findByDevicesMac(mac);
+		if (lock == null) {
+			lock = this.lockCache.put(mac, new Object());
+		}
 
-			if (person != null) {
-				Device device = person.getDeviceByMac(mac);
+		synchronized (lock) {
+			List<Signal> signals = this.signalRepository
+					.findByTimestampBetweenAndMacIn(ts.minusHours(awayTime),
+							ts, Arrays.asList(s.getMac()));
+			if (signals == null || signals.isEmpty()) {
+				Person person = this.personRepository.findByDevicesMac(mac);
 
-				if (Boolean.TRUE.equals(device.getEnabled())) {
-					this.LOGGER.info("Sending to pushover");
-					String deviceName = device.getName();
+				if (person != null) {
+					Device device = person.getDeviceByMac(mac);
 
-					send(person.getName(), deviceName);
+					if (Boolean.TRUE.equals(device.getEnabled())) {
+						this.LOGGER.info("Sending to pushover");
+						String deviceName = device.getName();
+
+						send(person.getName(), deviceName);
+					}
+
 				}
-
+			} else {
+				this.LOGGER
+						.info(String
+								.format("Cancel - already sent within last %d hours to pushover!",
+										awayTime));
 			}
-		} else {
-			this.LOGGER.info(String.format(
-					"Cancel - already sent within last %d hours to pushover!",
-					awayTime));
 		}
 
 	}
