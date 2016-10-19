@@ -57,7 +57,7 @@ public class PushoverSender {
 	@Autowired
 	private PersonRepository personRepository;
 
-	private final Map<String, Object> lockCache = new HashMap<String, Object>();
+	private final static Map<String, Object> LOCK_CACHE = new HashMap<String, Object>();
 
 	@HandleBeforeCreate
 	public void notifyViaPushover(Signal s) {
@@ -65,10 +65,10 @@ public class PushoverSender {
 		DateTime ts = s.getTimestamp();
 		String mac = s.getMac();
 
-		Object lock = this.lockCache.get(mac);
+		Object lock = PushoverSender.LOCK_CACHE.get(mac);
 
 		if (lock == null) {
-			lock = this.lockCache.put(mac, new Object());
+			lock = PushoverSender.LOCK_CACHE.put(mac, new Object());
 		}
 
 		synchronized (lock) {
